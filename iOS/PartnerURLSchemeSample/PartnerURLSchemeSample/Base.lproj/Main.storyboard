@@ -52,7 +52,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sl2-rz-Ntj">
-                                <rect key="frame" x="210" y="209" width="181" height="30"/>
+                                <rect key="frame" x="210" y="208" width="181" height="30"/>
                                 <state key="normal" title="Show Parche In App Store">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -60,11 +60,22 @@
                                     <action selector="showParcheInAppStore" destination="vXZ-lx-hvc" eventType="touchUpInside" id="rnY-4X-6Hc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCw-Sm-PPb">
+                                <rect key="frame" x="194" y="255" width="212" height="30"/>
+                                <state key="normal" title="Open Parche Without Discount">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="openAppWithoutDiscount" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Mhl-xx-Kfc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="sl2-rz-Ntj" firstAttribute="top" secondItem="8uc-id-dgY" secondAttribute="bottom" constant="26" id="1nH-72-tM6"/>
+                            <constraint firstAttribute="centerX" secondItem="vCw-Sm-PPb" secondAttribute="centerX" id="Bfu-76-XgI"/>
                             <constraint firstItem="8uc-id-dgY" firstAttribute="top" secondItem="6qO-ak-zP6" secondAttribute="bottom" constant="8" id="JEj-4z-irw"/>
+                            <constraint firstItem="vCw-Sm-PPb" firstAttribute="top" secondItem="sl2-rz-Ntj" secondAttribute="bottom" constant="16" id="Lnn-cQ-MFK"/>
                             <constraint firstAttribute="centerX" secondItem="6qO-ak-zP6" secondAttribute="centerX" id="Owy-gB-MNu"/>
                             <constraint firstAttribute="trailing" secondItem="8uc-id-dgY" secondAttribute="trailing" constant="20" id="S8a-Ib-403"/>
                             <constraint firstAttribute="centerX" secondItem="sl2-rz-Ntj" secondAttribute="centerX" id="Tqh-xP-gFR"/>
