@@ -18,6 +18,12 @@
 #import <OCMockitoIOS/OCMockitoIOS.h>
 
 
+static NSString * const FakeAPIKey = @"FAKE_API_KEY";
+static NSString * const FakeDiscountCode = @"DISCOUNT_CODE";
+static NSString * const FakeStandardUserID = @"USER_ID";
+static NSString * const ExpectedNoDiscountURLString = @"goparche://open?api_key=FAKE_API_KEY";
+static NSString * const ExpectedStandardDiscountURLString = @"goparche://open?partner_user_id=USER_ID&discount_code=DISCOUNT_CODE&api_key=FAKE_API_KEY";
+
 #import "PARPartnerURLSchemeHelper+Testing.h"
 
 @interface PartnerURLSchemeSampleTests : XCTestCase
@@ -86,45 +92,45 @@
 - (void)testOpeningWithoutDiscountShouldWork
 {
     [self setMockCanOpenParche:YES];
-    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheWithAPIKey:@"FAKE_API_KEY"];
+    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheWithAPIKey:FakeAPIKey];
     XCTAssertTrue(canOpen);
-    [self verifyMockOpenedURL:@"goparche://open?api_key=FAKE_API_KEY"];
+    [self verifyMockOpenedURL:ExpectedNoDiscountURLString];
 }
 
 - (void)testOpeningWithoutDiscountShouldFailIfAppNeedsInstallOrUpgrade
 {
     [self setMockCanOpenParche:NO];
-    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheWithAPIKey:@"FAKE_API_KEY"];
+    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheWithAPIKey:FakeAPIKey];
     XCTAssertFalse(canOpen);
-    [self verifyMockNeverOpenedURL:@"goparche://open?api_key=FAKE_API_KEY"];
+    [self verifyMockNeverOpenedURL:ExpectedNoDiscountURLString];
 }
 
 - (void)testOpeningWithDiscountShouldWork
 {
     [self setMockCanOpenParche:YES];
-    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:@"USER_ID"
-                                                                     discountCode:@"DISCOUNT_CODE"
-                                                                           apiKey:@"FAKE_API_KEY"];
+    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:FakeStandardUserID
+                                                                     discountCode:FakeDiscountCode
+                                                                           apiKey:FakeAPIKey];
     XCTAssertTrue(canOpen);
-    [self verifyMockOpenedURL:@"goparche://open?partner_user_id=USER_ID&discount_code=DISCOUNT_CODE&api_key=FAKE_API_KEY"];
+    [self verifyMockOpenedURL:ExpectedStandardDiscountURLString];
 }
 
 - (void)testOpeningWithDiscountShouldFailIfAppNeedsInstallOrUpgrade
 {
     [self setMockCanOpenParche:NO];
-    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:@"USER_ID"
-                                                                     discountCode:@"DISCOUNT_CODE"
-                                                                           apiKey:@"FAKE_API_KEY"];
+    BOOL canOpen = [PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:FakeStandardUserID
+                                                                     discountCode:FakeDiscountCode
+                                                                           apiKey:FakeAPIKey];
     XCTAssertFalse(canOpen);
-    [self verifyMockNeverOpenedURL:@"goparche://open?partner_user_id=USER_ID&discount_code=DISCOUNT_CODE&api_key=FAKE_API_KEY"];
+    [self verifyMockNeverOpenedURL:ExpectedStandardDiscountURLString];
 }
 
 - (void)testOpeningWithDiscountAndUserIdThatNeedsEncodingShouldWork
 {
     [self setMockCanOpenParche:YES];
     BOOL canOpen = [PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:@"USER ID"
-                                                                     discountCode:@"DISCOUNT_CODE"
-                                                                           apiKey:@"FAKE_API_KEY"];
+                                                                     discountCode:FakeDiscountCode
+                                                                           apiKey:FakeAPIKey];
     XCTAssertTrue(canOpen);
     [self verifyMockOpenedURL:@"goparche://open?partner_user_id=USER%20ID&discount_code=DISCOUNT_CODE&api_key=FAKE_API_KEY"];
 }
