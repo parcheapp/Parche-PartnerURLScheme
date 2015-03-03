@@ -8,20 +8,34 @@
 
 #import "ViewController.h"
 
+#import "PARPartnerURLSchemeHelper.h"
+
 @interface ViewController ()
+@property (nonatomic, weak) IBOutlet UILabel *canOpenLabel;
 
 @end
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+#pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    [self checkParcheNeedsUpdateOrInstall];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - IBActions
+
+- (IBAction)checkParcheNeedsUpdateOrInstall
+{
+    BOOL needs = [PARPartnerURLSchemeHelper parcheNeedsToBeUpdatedOrInstalled];
+    self.canOpenLabel.text = needs ? @"YES" : @"NO";
+}
+
+- (IBAction)showParcheInAppStore
+{
+    [PARPartnerURLSchemeHelper showParcheInAppStore];
 }
 
 @end

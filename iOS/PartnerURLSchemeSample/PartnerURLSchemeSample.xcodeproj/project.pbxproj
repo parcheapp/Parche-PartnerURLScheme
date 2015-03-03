@@ -14,6 +14,7 @@
 		3342B2631AA641840094C157 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3342B2621AA641840094C157 /* Images.xcassets */; };
 		3342B2661AA641840094C157 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3342B2641AA641840094C157 /* LaunchScreen.xib */; };
 		3342B2721AA641840094C157 /* PartnerURLSchemeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */; };
+		3342B27E1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		3342B26B1AA641840094C157 /* PartnerURLSchemeSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PartnerURLSchemeSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3342B2701AA641840094C157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PartnerURLSchemeSampleTests.m; sourceTree = "<group>"; };
+		3342B27C1AA641BF0094C157 /* PARPartnerURLSchemeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PARPartnerURLSchemeHelper.h; sourceTree = "<group>"; };
+		3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PARPartnerURLSchemeHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +91,7 @@
 				3342B25F1AA641840094C157 /* Main.storyboard */,
 				3342B2621AA641840094C157 /* Images.xcassets */,
 				3342B2641AA641840094C157 /* LaunchScreen.xib */,
+				3342B27B1AA6419D0094C157 /* PartnerURLSchemeHelper */,
 				3342B2551AA641840094C157 /* Supporting Files */,
 			);
 			path = PartnerURLSchemeSample;
@@ -118,6 +122,15 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		3342B27B1AA6419D0094C157 /* PartnerURLSchemeHelper */ = {
+			isa = PBXGroup;
+			children = (
+				3342B27C1AA641BF0094C157 /* PARPartnerURLSchemeHelper.h */,
+				3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */,
+			);
+			path = PartnerURLSchemeHelper;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -220,6 +233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3342B25E1AA641840094C157 /* ViewController.m in Sources */,
+				3342B27E1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m in Sources */,
 				3342B25B1AA641840094C157 /* AppDelegate.m in Sources */,
 				3342B2581AA641840094C157 /* main.m in Sources */,
 			);
