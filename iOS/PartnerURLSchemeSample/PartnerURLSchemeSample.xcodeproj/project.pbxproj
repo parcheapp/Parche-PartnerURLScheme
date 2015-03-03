@@ -17,7 +17,6 @@
 		3342B27E1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */; };
 		3342B2841AA65BD60094C157 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3342B2831AA65BD60094C157 /* OCMockitoIOS.framework */; };
 		3342B2861AA65BE50094C157 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3342B2851AA65BE50094C157 /* OCHamcrestIOS.framework */; };
-		3342B2891AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B2881AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +48,6 @@
 		3342B2831AA65BD60094C157 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMockitoIOS.framework; sourceTree = "<group>"; };
 		3342B2851AA65BE50094C157 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCHamcrestIOS.framework; sourceTree = "<group>"; };
 		3342B2871AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PARPartnerURLSchemeHelper+Testing.h"; sourceTree = "<group>"; };
-		3342B2881AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PARPartnerURLSchemeHelper+Testing.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,9 +117,8 @@
 			isa = PBXGroup;
 			children = (
 				3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */,
-				3342B26F1AA641840094C157 /* Supporting Files */,
 				3342B2871AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.h */,
-				3342B2881AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.m */,
+				3342B26F1AA641840094C157 /* Supporting Files */,
 			);
 			path = PartnerURLSchemeSampleTests;
 			sourceTree = "<group>";
@@ -256,7 +253,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3342B2891AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.m in Sources */,
 				3342B2721AA641840094C157 /* PartnerURLSchemeSampleTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

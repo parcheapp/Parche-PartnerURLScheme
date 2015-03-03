@@ -12,7 +12,7 @@ static NSString * const ParcheURLScheme = @"goparche://";
 static NSString * const ParcheOpenEndpoint = @"open";
 static NSString * const ParcheNoDiscountFormat = @"?api_key=%@";
 static NSString * const ParcheDiscountFormat = @"?partner_user_id=%@&discount_code=%@&api_key=%@";
-static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/parche-valet-without-delay/id943516663?ct=partner";
+NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/parche-valet-without-delay/id943516663?ct=partner";
 
 @interface PARPartnerURLSchemeHelper()
 @property (nonatomic) UIApplication *application;
@@ -22,7 +22,11 @@ static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/pa
 
 + (void)setApplicaitonForTesting:(UIApplication *)application
 {
-    [self sharedInstance].application = application;
+    if (application) {
+        [self sharedInstance].application = application;
+    } else {
+        [self sharedInstance].application = [UIApplication sharedApplication];
+    }
 }
 
 + (PARPartnerURLSchemeHelper *)sharedInstance

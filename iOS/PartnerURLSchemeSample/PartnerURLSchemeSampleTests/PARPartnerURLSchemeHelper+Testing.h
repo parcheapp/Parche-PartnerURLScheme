@@ -8,8 +8,10 @@
 
 #import "PARPartnerURLSchemeHelper.h"
 
+FOUNDATION_EXPORT NSString * const ParcheAppStoreURL;
+
 /**
- * Helper to make test-only methods public.
+ * Helper category to make test-only methods and consts public.
  */
 @interface PARPartnerURLSchemeHelper (Testing)
 
