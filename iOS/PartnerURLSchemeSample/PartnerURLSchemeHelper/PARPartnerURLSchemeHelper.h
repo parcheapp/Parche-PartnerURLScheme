@@ -32,16 +32,26 @@
 + (void)showParcheInAppStore;
 
 /**
- *  <#Description#>
+ *  Opens the Parche Application without a discount, but indicating what app the request is coming from.
  *
- *  @param partnerUserID <#partnerUserID description#>
- *  @param discountCode  <#discountCode description#>
- *  @param apiKey        <#apiKey description#>
+ *  @param apiKey The partner application's Parche API key.
  *
  *  @return YES if the request opened the Parche application successfully, NO if it did not.
  */
-+ (BOOL)requestDiscountForUser:(NSString *)partnerUserID
-                      withCode:(NSString *)discountCode
-                        apiKey:(NSString *)apiKey;
++ (BOOL)openParcheWithAPIKey:(NSString *)apiKey;
+
+/**
+ *  Opens the Parche application and passes the required information along to it.
+ *
+ *  @param partnerUserID The user ID used to identify the current user on the partner application's end. 
+                         NOTE: Will be URL encoded by this class, DO NOT URL ENCODE before passing in. 
+ *  @param discountCode  The discount code retrieved from the Parche server.
+ *  @param apiKey        The partner application's Parche API Key. 
+ *
+ *  @return YES if the request opened the Parche application successfully, NO if it did not.
+ */
++ (BOOL)openParcheAndRequestDiscountForUser:(NSString *)partnerUserID
+                               discountCode:(NSString *)discountCode
+                                     apiKey:(NSString *)apiKey;
 
 @end

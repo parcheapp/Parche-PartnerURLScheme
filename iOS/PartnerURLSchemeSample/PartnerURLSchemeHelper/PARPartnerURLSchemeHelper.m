@@ -10,20 +10,20 @@
 
 static NSString * const ParcheURLScheme = @"goparche://";
 static NSString * const ParcheOpenEndpoint = @"open";
-static NSString * const ParcheOpenFormat = @"open?partner_user_id=%@&discount_code=%@&api_key=%@";
+static NSString * const ParcheNoDiscountFormat = @"?api_key=%@";
+static NSString * const ParcheDiscountFormat = @"?partner_user_id=%@&discount_code=%@&api_key=%@";
 static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/parche-valet-without-delay/id943516663?ct=partner";
 
 @implementation PARPartnerURLSchemeHelper
 
-+ (NSURL *)openWithoutDiscountURL
++ (NSString *)openAppURLString
 {
-    NSString *urlString = [ParcheURLScheme stringByAppendingString:ParcheOpenEndpoint];
-    return [NSURL URLWithString:urlString];
+    return [ParcheURLScheme stringByAppendingString:ParcheOpenEndpoint];
 }
 
 + (BOOL)parcheNeedsToBeUpdatedOrInstalled
 {
-    return ![[UIApplication sharedApplication] canOpenURL:[self openWithoutDiscountURL]];
+    return ![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[self openAppURLString]]];
 }
 
 + (void)showParcheInAppStore
@@ -31,30 +31,30 @@ static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/pa
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:ParcheAppStoreURL]];
 }
 
-+ (BOOL)openWithoutDiscount
++ (BOOL)openParcheWithAPIKey:(NSString *)apiKey
 {
     if (![self parcheNeedsToBeUpdatedOrInstalled]) {
-        [[UIApplication sharedApplication] openURL:[self openWithoutDiscountURL]];
+        NSString *urlString = [[self openAppURLString] stringByAppendingFormat:ParcheNoDiscountFormat, apiKey];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
         return YES;
     } else {
         return NO;
     }
 }
 
-+ (BOOL)requestDiscountForUser:(NSString *)partnerUserID
-                      withCode:(NSString *)discountCode
-                        apiKey:(NSString *)apiKey
++ (BOOL)openParcheAndRequestDiscountForUser:(NSString *)partnerUserID
+                               discountCode:(NSString *)discountCode
+                                     apiKey:(NSString *)apiKey
 {
     if (![self parcheNeedsToBeUpdatedOrInstalled]) {
-        
-        NSString *path = [NSString stringWithFormat:ParcheOpenFormat, partnerUserID, discountCode, apiKey];
-        NSString *urlString = [ParcheURLScheme stringByAppendingString:path];
+        NSString *encodedUserID = [partnerUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *path = [NSString stringWithFormat:ParcheDiscountFormat, encodedUserID, discountCode, apiKey];
+        NSString *urlString = [[self openAppURLString] stringByAppendingString:path];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];        
         return YES;
     } else {
         return NO;
     }
 }
-
 
 @end
