@@ -15,6 +15,8 @@
 		3342B2661AA641840094C157 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3342B2641AA641840094C157 /* LaunchScreen.xib */; };
 		3342B2721AA641840094C157 /* PartnerURLSchemeSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */; };
 		3342B27E1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */; };
+		3342B2841AA65BD60094C157 /* OCMockitoIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3342B2831AA65BD60094C157 /* OCMockitoIOS.framework */; };
+		3342B2861AA65BE50094C157 /* OCHamcrestIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3342B2851AA65BE50094C157 /* OCHamcrestIOS.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +45,9 @@
 		3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PartnerURLSchemeSampleTests.m; sourceTree = "<group>"; };
 		3342B27C1AA641BF0094C157 /* PARPartnerURLSchemeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PARPartnerURLSchemeHelper.h; sourceTree = "<group>"; };
 		3342B27D1AA641BF0094C157 /* PARPartnerURLSchemeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PARPartnerURLSchemeHelper.m; sourceTree = "<group>"; };
+		3342B2831AA65BD60094C157 /* OCMockitoIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCMockitoIOS.framework; sourceTree = "<group>"; };
+		3342B2851AA65BE50094C157 /* OCHamcrestIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OCHamcrestIOS.framework; sourceTree = "<group>"; };
+		3342B2871AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PARPartnerURLSchemeHelper+Testing.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3342B2841AA65BD60094C157 /* OCMockitoIOS.framework in Frameworks */,
+				3342B2861AA65BE50094C157 /* OCHamcrestIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				3342B2711AA641840094C157 /* PartnerURLSchemeSampleTests.m */,
+				3342B2871AA65EFB0094C157 /* PARPartnerURLSchemeHelper+Testing.h */,
 				3342B26F1AA641840094C157 /* Supporting Files */,
 			);
 			path = PartnerURLSchemeSampleTests;
@@ -118,6 +126,8 @@
 		3342B26F1AA641840094C157 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3342B2851AA65BE50094C157 /* OCHamcrestIOS.framework */,
+				3342B2831AA65BD60094C157 /* OCMockitoIOS.framework */,
 				3342B2701AA641840094C157 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -380,6 +390,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"/Users/ellenshapiro/Downloads/OCHamcrest-4.0.1",
+					"/Users/ellenshapiro/Downloads/OCMockito-1.4.0",
+					"$(PROJECT_DIR)/PartnerURLSchemeSampleTests",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -387,6 +400,12 @@
 				);
 				INFOPLIST_FILE = PartnerURLSchemeSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PartnerURLSchemeSample.app/PartnerURLSchemeSample";
 			};
@@ -399,9 +418,18 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"/Users/ellenshapiro/Downloads/OCHamcrest-4.0.1",
+					"/Users/ellenshapiro/Downloads/OCMockito-1.4.0",
+					"$(PROJECT_DIR)/PartnerURLSchemeSampleTests",
 				);
 				INFOPLIST_FILE = PartnerURLSchemeSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					XCTest,
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PartnerURLSchemeSample.app/PartnerURLSchemeSample";
 			};

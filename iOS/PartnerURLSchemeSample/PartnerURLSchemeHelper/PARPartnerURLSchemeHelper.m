@@ -12,9 +12,34 @@ static NSString * const ParcheURLScheme = @"goparche://";
 static NSString * const ParcheOpenEndpoint = @"open";
 static NSString * const ParcheNoDiscountFormat = @"?api_key=%@";
 static NSString * const ParcheDiscountFormat = @"?partner_user_id=%@&discount_code=%@&api_key=%@";
-static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/parche-valet-without-delay/id943516663?ct=partner";
+NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/parche-valet-without-delay/id943516663?ct=partner";
+
+@interface PARPartnerURLSchemeHelper()
+@property (nonatomic) UIApplication *application;
+@end
 
 @implementation PARPartnerURLSchemeHelper
+
++ (void)setApplicaitonForTesting:(UIApplication *)application
+{
+    if (application) {
+        [self sharedInstance].application = application;
+    } else {
+        [self sharedInstance].application = [UIApplication sharedApplication];
+    }
+}
+
++ (PARPartnerURLSchemeHelper *)sharedInstance
+{
+    static PARPartnerURLSchemeHelper *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [[self alloc] init];
+        sharedInstance.application = [UIApplication sharedApplication];
+    });
+
+    return sharedInstance;
+}
 
 + (NSString *)openAppURLString
 {
@@ -23,19 +48,19 @@ static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/pa
 
 + (BOOL)parcheNeedsToBeUpdatedOrInstalled
 {
-    return ![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:[self openAppURLString]]];
+    return ![[self sharedInstance].application canOpenURL:[NSURL URLWithString:[self openAppURLString]]];
 }
 
 + (void)showParcheInAppStore
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:ParcheAppStoreURL]];
+    [[self sharedInstance].application openURL:[NSURL URLWithString:ParcheAppStoreURL]];
 }
 
 + (BOOL)openParcheWithAPIKey:(NSString *)apiKey
 {
     if (![self parcheNeedsToBeUpdatedOrInstalled]) {
         NSString *urlString = [[self openAppURLString] stringByAppendingFormat:ParcheNoDiscountFormat, apiKey];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+        [[self sharedInstance].application openURL:[NSURL URLWithString:urlString]];
         return YES;
     } else {
         return NO;
@@ -50,7 +75,7 @@ static NSString * const ParcheAppStoreURL = @"https://itunes.apple.com/us/app/pa
         NSString *encodedUserID = [partnerUserID stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         NSString *path = [NSString stringWithFormat:ParcheDiscountFormat, encodedUserID, discountCode, apiKey];
         NSString *urlString = [[self openAppURLString] stringByAppendingString:path];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];        
+        [[self sharedInstance].application openURL:[NSURL URLWithString:urlString]];
         return YES;
     } else {
         return NO;
