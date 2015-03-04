@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">PartnerURLSchemeSample</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="check_install">Check Update/Install</string>
+    <string name="display_update_install">Does Parche need to be updated or installed?</string>
+    <string name="show_in_store">Show Parche In Play Store</string>
+    <string name="open_no_discount">Open Parche Without Discount</string>
+    <string name="ok">OK</string>
+    <string name="not_installed_alert_title">Ruh Roh!</string>
+    <string name="not_installed_alert_message">You do not have a version of Parche which supports the URL scheme installed.</string>
 </resources>

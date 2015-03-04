@@ -36,7 +36,7 @@ public class ParchePartnerURLSchemeHelper {
         PackageManager packageManager = aContext.getPackageManager();
         Intent openAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL_SCHEME + OPEN_ENDPOINT));
         List activitiesCanHandle = packageManager.queryIntentActivities(openAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
-        return activitiesCanHandle.size() > 0;
+        return activitiesCanHandle.size() == 0;
     }
 
     /**
