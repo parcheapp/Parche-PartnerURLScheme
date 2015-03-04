@@ -1,7 +1,6 @@
 package com.parche.partnerurlschemesample;
 
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
@@ -42,11 +41,27 @@ public class ParchePartnerURLSchemeHelper {
 
     /**
      * Opens the Google Play store to show the Parche application so it may be updated or installed.
+     * Will try to open the Google Play store first, then fall back to opening the app's page on the Play store website.
      *
      * @param aContext The current context.
      */
+    //Intent.FLAG_ACTIVITY_CLEAR_TASK_WHEN_RESET deprecated in API 21, but still needed before that.
+    @SuppressWarnings("deprecation")
     public static void showParcheInPlayStore(Context aContext) {
+        String marketURLString = PLAY_STORE_URL_SCHEME + PARCHE_PACKAGE_NAME;
+        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketURLString));
+        marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
+        try {
+            aContext.startActivity(marketIntent);
+        } catch (ActivityNotFoundException e) {
+            //This user does not have the Play app installed - show them the webpage.
+            String webURLString = PLAY_STORE_WEB_URL + PARCHE_PACKAGE_NAME;
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webURLString));
+            aContext.startActivity(webIntent);
+        }
     }
 
     /**
