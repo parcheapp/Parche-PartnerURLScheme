@@ -14,11 +14,14 @@ Convenience classes will also include methods to determine if the user has the P
 
 When you sign up for a partnership with Parche, you will receive an **API Key** and an **API Secret**.
 
-To increase security and prevent rewind attacks, you must call the Parche Discount API from your server rather than directly from your application. This has several security benefits: 
+To increase security and prevent rewind attacks, we **strongly recommend** calling the Parche Discount API from your server rather than directly from your application. This has several security benefits: 
 
 - Removes the need for storing your API secret in your application. 
 - Your API key can be stored in plain text within the application since it's essentially useless without the secret.
 - Allows on-the-fly replacement of the secret in the event of compromise instead of having to wait for an update to get published.
+
+While it is possible to call the discount API from your application, if you do so, you assume the risk of any compromise of your API secret. 
+
 
 ##Discount API
 
