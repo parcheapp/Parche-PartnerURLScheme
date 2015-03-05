@@ -3,6 +3,7 @@ package com.parche.partnerurlschemesample;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.List;
 
@@ -15,9 +16,50 @@ public class ParchePartnerURLSchemeHelper {
     private static final String OPEN_ENDPOINT = "open";
     private static final String NO_DISCOUNT_FORMAT = "?api_key=%s";
     private static final String DISCOUNT_FORMAT = "?partner_user_id=%s&discount_code=%s&api_key=%s";
+
     public static final String PARCHE_PACKAGE_NAME = "com.parche.parchemobile";
     public static final String PLAY_STORE_URL_SCHEME = "market://details?id=";
     public static final String PLAY_STORE_WEB_URL = "http://play.google.com/store/apps/details?id=";
+
+
+    private Intent mIntent;
+
+    /*******************
+     * PRIVATE METHODS *
+     *******************/
+
+     private static ParchePartnerURLSchemeHelper sSharedInstance = null;
+     private static ParchePartnerURLSchemeHelper sharedInstance() {
+         if (sSharedInstance == null) {
+             sSharedInstance = new ParchePartnerURLSchemeHelper();
+         }
+
+         return sSharedInstance;
+     }
+
+    /*******************
+     * TESTING METHODS *
+     *******************/
+
+    /*
+       The following methods are protected so they may be accessed by tests.
+     */
+
+    protected static void setIntent(Intent aIntent) {
+        sharedInstance().mIntent = aIntent;
+    }
+
+    protected static Intent getViewIntentForURLString(String aURLString) {
+        Intent intentToUse = sharedInstance().mIntent;
+        if (intentToUse == null) {
+            intentToUse = new Intent();
+        }
+
+        intentToUse.setAction(Intent.ACTION_VIEW);
+        intentToUse.setData(Uri.parse(aURLString));
+
+        return intentToUse;
+    }
 
     /******************
      * PUBLIC METHODS *
@@ -34,7 +76,7 @@ public class ParchePartnerURLSchemeHelper {
      */
     public static boolean parcheNeedsToBeUpdatedOrInstalled(Context aContext) {
         PackageManager packageManager = aContext.getPackageManager();
-        Intent openAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(URL_SCHEME + OPEN_ENDPOINT));
+        Intent openAppIntent = getViewIntentForURLString(URL_SCHEME + OPEN_ENDPOINT);
         List activitiesCanHandle = packageManager.queryIntentActivities(openAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
         return activitiesCanHandle.size() == 0;
     }
@@ -49,7 +91,7 @@ public class ParchePartnerURLSchemeHelper {
     @SuppressWarnings("deprecation")
     public static void showParcheInPlayStore(Context aContext) {
         String marketURLString = PLAY_STORE_URL_SCHEME + PARCHE_PACKAGE_NAME;
-        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketURLString));
+        Intent marketIntent = getViewIntentForURLString(marketURLString);
         marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                 Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
@@ -59,7 +101,7 @@ public class ParchePartnerURLSchemeHelper {
         } catch (ActivityNotFoundException e) {
             //This user does not have the Play app installed - show them the webpage.
             String webURLString = PLAY_STORE_WEB_URL + PARCHE_PACKAGE_NAME;
-            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webURLString));
+            Intent webIntent = getViewIntentForURLString(webURLString);
             aContext.startActivity(webIntent);
         }
     }
@@ -76,7 +118,7 @@ public class ParchePartnerURLSchemeHelper {
     public static boolean openParche(Context aContext, String aAPIKey) {
         if (!parcheNeedsToBeUpdatedOrInstalled(aContext)) {
             String urlString = URL_SCHEME + OPEN_ENDPOINT + String.format(NO_DISCOUNT_FORMAT, aAPIKey);
-            Intent openOnlyIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+            Intent openOnlyIntent = getViewIntentForURLString(urlString);
             aContext.startActivity(openOnlyIntent);
             return true;
         }
@@ -102,7 +144,7 @@ public class ParchePartnerURLSchemeHelper {
                                                        String aAPIKey) {
         if (!parcheNeedsToBeUpdatedOrInstalled(aContext)) {
             String urlString = URL_SCHEME + OPEN_ENDPOINT + String.format(DISCOUNT_FORMAT, aPartnerUserID, aDiscountCode, aAPIKey);
-            Intent discountIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+            Intent discountIntent = getViewIntentForURLString(urlString);
             aContext.startActivity(discountIntent);
             return true;
         }
