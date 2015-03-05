@@ -3,7 +3,6 @@ package com.parche.partnerurlschemesample;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.util.Log;
 
 import java.util.List;
 

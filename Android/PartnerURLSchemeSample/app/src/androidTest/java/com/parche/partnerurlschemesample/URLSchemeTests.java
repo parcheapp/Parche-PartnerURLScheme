@@ -3,15 +3,16 @@ package com.parche.partnerurlschemesample;
 import android.content.*;
 import android.content.pm.*;
 import android.support.test.runner.AndroidJUnit4;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 /**
  * NOTE: Due to a known issue with Mockito and ART, these tests will not run on Lollipop+ devices.
