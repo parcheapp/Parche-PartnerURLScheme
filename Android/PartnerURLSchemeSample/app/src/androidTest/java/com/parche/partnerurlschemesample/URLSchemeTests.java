@@ -65,8 +65,16 @@ public class URLSchemeTests {
     }
 
     private void setMockCanOpenPlayStore(boolean aCanOpen) {
-        if (aCanOpen) {
+        String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
+        Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
 
+        if (aCanOpen) {
+            doNothing().when(mMockContext).startActivity(openPlayStoreIntent);
+        } else {
+            //Throw on the first try, be fine on the second.
+            doThrow(new ActivityNotFoundException())
+                    .doNothing()
+                    .when(mMockContext).startActivity(openPlayStoreIntent);
         }
     }
 
@@ -103,12 +111,20 @@ public class URLSchemeTests {
 
     @Test
     public void callingPlayStoreOpenWouldUseTheMarketURLIfTheMarketURLSchemeExists() {
+        setMockCanOpenPlayStore(true);
+        ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
 
+        //Should only fire once for the market.
+        verify(mMockContext, times(1)).startActivity(any(Intent.class));
     }
 
     @Test
     public void callingPlayStoreOpenWouldUseTheWebURLIfTheMarketURLSchemeDoesNotExist() {
+        setMockCanOpenPlayStore(false);
+        ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
 
+        //Should fire twice: Once for the market and once for the web.
+        verify(mMockContext, times(2)).startActivity(any(Intent.class));
     }
 
     @Test

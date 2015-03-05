@@ -3,6 +3,7 @@ package com.parche.partnerurlschemesample;
 import android.content.*;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.List;
 
@@ -36,19 +37,19 @@ public class ParchePartnerURLSchemeHelper {
          return sSharedInstance;
      }
 
-    /**************************
-     * TESTING-PUBLIC METHODS *
-     **************************/
+    /*******************
+     * TESTING METHODS *
+     *******************/
 
-    public static void setIntent(Intent aIntent) {
+    /*
+       The following methods are protected so they may be accessed by tests.
+     */
+
+    protected static void setIntent(Intent aIntent) {
         sharedInstance().mIntent = aIntent;
     }
 
-    /******************
-     * PUBLIC METHODS *
-     ******************/
-
-    public static Intent getViewIntentForURLString(String aURLString) {
+    protected static Intent getViewIntentForURLString(String aURLString) {
         Intent intentToUse = sharedInstance().mIntent;
         if (intentToUse == null) {
             intentToUse = new Intent();
@@ -59,6 +60,10 @@ public class ParchePartnerURLSchemeHelper {
 
         return intentToUse;
     }
+
+    /******************
+     * PUBLIC METHODS *
+     ******************/
 
     /**
      * Determines if there is a version of Parche on the user's device which responds
