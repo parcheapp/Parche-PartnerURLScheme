@@ -36,6 +36,13 @@ public class ParchePartnerURLSchemeHelper {
          return sSharedInstance;
      }
 
+    private static boolean urlCanBeHandled(Context aContext, String aURLString) {
+        PackageManager packageManager = aContext.getPackageManager();
+        Intent openAppIntent = getViewIntentForURLString(aURLString);
+        List activitiesCanHandle = packageManager.queryIntentActivities(openAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        return activitiesCanHandle.size() != 0;
+    }
+
     /*******************
      * TESTING METHODS *
      *******************/
@@ -74,10 +81,7 @@ public class ParchePartnerURLSchemeHelper {
      *         to go ahead and open the application.
      */
     public static boolean parcheNeedsToBeUpdatedOrInstalled(Context aContext) {
-        PackageManager packageManager = aContext.getPackageManager();
-        Intent openAppIntent = getViewIntentForURLString(URL_SCHEME + OPEN_ENDPOINT);
-        List activitiesCanHandle = packageManager.queryIntentActivities(openAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
-        return activitiesCanHandle.size() == 0;
+        return !urlCanBeHandled(aContext, URL_SCHEME + OPEN_ENDPOINT);
     }
 
     /**
@@ -90,14 +94,14 @@ public class ParchePartnerURLSchemeHelper {
     @SuppressWarnings("deprecation")
     public static void showParcheInPlayStore(Context aContext) {
         String marketURLString = PLAY_STORE_URL_SCHEME + PARCHE_PACKAGE_NAME;
-        Intent marketIntent = getViewIntentForURLString(marketURLString);
-        marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-        try {
+        if (urlCanBeHandled(aContext, marketURLString)) {
+            Intent marketIntent = getViewIntentForURLString(marketURLString);
+            marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             aContext.startActivity(marketIntent);
-        } catch (ActivityNotFoundException e) {
+        } else {
             //This user does not have the Play app installed - show them the webpage.
             String webURLString = PLAY_STORE_WEB_URL + PARCHE_PACKAGE_NAME;
             Intent webIntent = getViewIntentForURLString(webURLString);

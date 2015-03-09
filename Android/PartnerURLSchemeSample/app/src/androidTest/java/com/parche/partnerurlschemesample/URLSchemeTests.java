@@ -68,15 +68,17 @@ public class URLSchemeTests {
     private void setMockCanOpenPlayStore(boolean aCanOpen) {
         String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
         Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
-
+        List<ResolveInfo> activitiesList = new ArrayList<>();
         if (aCanOpen) {
+            ResolveInfo appInfo = new ResolveInfo();
+            appInfo.resolvePackageName = "ANDROIDMARKET";
+            appInfo.activityInfo = new ActivityInfo();
+            activitiesList.add(appInfo);
             doNothing().when(mMockContext).startActivity(openPlayStoreIntent);
-        } else {
-            //Throw on the first try, be fine on the second.
-            doThrow(new ActivityNotFoundException())
-                    .doNothing()
-                    .when(mMockContext).startActivity(openPlayStoreIntent);
-        }
+        } 
+
+        when(mMockPackageManager.queryIntentActivities(openPlayStoreIntent, PackageManager.MATCH_DEFAULT_ONLY))
+                .thenReturn(activitiesList);
     }
 
     private void verifyMockFiredIntentWithURLString(String urlString) {
@@ -115,8 +117,11 @@ public class URLSchemeTests {
         setMockCanOpenPlayStore(true);
         ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
 
+        String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
+        Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
+
         //Should only fire once for the market.
-        verify(mMockContext, times(1)).startActivity(any(Intent.class));
+        verify(mMockContext, times(1)).startActivity(openPlayStoreIntent);
     }
 
     @Test
@@ -124,8 +129,11 @@ public class URLSchemeTests {
         setMockCanOpenPlayStore(false);
         ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
 
+        String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_WEB_URL + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
+        Intent openWebIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
+
         //Should fire twice: Once for the market and once for the web.
-        verify(mMockContext, times(2)).startActivity(any(Intent.class));
+        verify(mMockContext, times(1)).startActivity(openWebIntent);
     }
 
     @Test
