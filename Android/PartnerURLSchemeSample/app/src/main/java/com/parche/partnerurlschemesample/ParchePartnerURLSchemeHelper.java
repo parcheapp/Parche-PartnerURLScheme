@@ -59,13 +59,9 @@ public class ParchePartnerURLSchemeHelper {
     @SuppressWarnings("deprecation")
     public static Intent showParcheInPlayStoreIntent(Context aContext) {
         String marketURLString = PLAY_STORE_URL_SCHEME + PARCHE_PACKAGE_NAME;
-
         Intent returnIntent;
         if (urlCanBeHandled(aContext, marketURLString)) {
             returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketURLString));
-            returnIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                    Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
-                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         } else {
             //This user does not have the Play app installed - show them the webpage.
             String webURLString = PLAY_STORE_WEB_URL + PARCHE_PACKAGE_NAME;
