@@ -2,6 +2,7 @@ package com.parche.partnerurlschemesample;
 
 import android.content.*;
 import android.content.pm.*;
+import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -44,7 +44,6 @@ public class URLSchemeTests {
         mMockPackageManager = mock(PackageManager.class);
         when(mMockContext.getPackageManager())
                 .thenReturn(mMockPackageManager);
-        ParchePartnerURLSchemeHelper.setIntent(new Intent());
     }
 
     /**************************
@@ -60,35 +59,27 @@ public class URLSchemeTests {
             activitiesList.add(appInfo);
         }
 
-        Intent viewIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString("goparche://open");
-        when(mMockPackageManager.queryIntentActivities(viewIntent, PackageManager.MATCH_DEFAULT_ONLY))
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("goparche://open"));
+        //Use "reflection equals" since intents don't work with equals.
+        when(mMockPackageManager.queryIntentActivities(refEq(viewIntent), eq(PackageManager.MATCH_DEFAULT_ONLY)))
                 .thenReturn(activitiesList);
     }
 
     private void setMockCanOpenPlayStore(boolean aCanOpen) {
-        String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
-        Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
         List<ResolveInfo> activitiesList = new ArrayList<>();
         if (aCanOpen) {
             ResolveInfo appInfo = new ResolveInfo();
             appInfo.resolvePackageName = "ANDROIDMARKET";
             appInfo.activityInfo = new ActivityInfo();
             activitiesList.add(appInfo);
-            doNothing().when(mMockContext).startActivity(openPlayStoreIntent);
-        } 
+        }
 
-        when(mMockPackageManager.queryIntentActivities(openPlayStoreIntent, PackageManager.MATCH_DEFAULT_ONLY))
+        String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
+        Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+
+        //Use "reflection equals" since intents don't work with equals.
+        when(mMockPackageManager.queryIntentActivities(refEq(marketIntent), eq(PackageManager.MATCH_DEFAULT_ONLY)))
                 .thenReturn(activitiesList);
-    }
-
-    private void verifyMockFiredIntentWithURLString(String urlString) {
-        Intent viewIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
-        verify(mMockContext, times(1)).startActivity(viewIntent);
-    }
-
-    private void verifyMockNeverFiredIntentWithURLString(String urlString) {
-        Intent viewIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
-        verify(mMockContext, never()).startActivity(viewIntent);
     }
 
     /****************
@@ -106,71 +97,65 @@ public class URLSchemeTests {
     public void ifApplicationCanBeOpenedWeDontNeedToInstallOrUpgrade() {
         setMockCanOpenParche(true);
         boolean shouldUpgrade = ParchePartnerURLSchemeHelper.parcheNeedsToBeUpdatedOrInstalled(mMockContext);
-        Intent viewIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString("goparche://open");
-
-        verify(mMockPackageManager, times(1)).queryIntentActivities(eq(viewIntent), eq(PackageManager.MATCH_DEFAULT_ONLY));
         assertFalse(shouldUpgrade);
     }
 
     @Test
     public void callingPlayStoreOpenWouldUseTheMarketURLIfTheMarketURLSchemeExists() {
         setMockCanOpenPlayStore(true);
-        ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
-
         String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_URL_SCHEME + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
-        Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
-
-        //Should only fire once for the market.
-        verify(mMockContext, times(1)).startActivity(openPlayStoreIntent);
+        Intent openPlayStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
+        Intent fromHelper = ParchePartnerURLSchemeHelper.showParcheInPlayStoreIntent(mMockContext);
+        assertTrue(fromHelper.filterEquals(openPlayStoreIntent));
     }
 
     @Test
     public void callingPlayStoreOpenWouldUseTheWebURLIfTheMarketURLSchemeDoesNotExist() {
         setMockCanOpenPlayStore(false);
-        ParchePartnerURLSchemeHelper.showParcheInPlayStore(mMockContext);
+        ParchePartnerURLSchemeHelper.showParcheInPlayStoreIntent(mMockContext);
 
         String urlString = ParchePartnerURLSchemeHelper.PLAY_STORE_WEB_URL + ParchePartnerURLSchemeHelper.PARCHE_PACKAGE_NAME;
-        Intent openWebIntent = ParchePartnerURLSchemeHelper.getViewIntentForURLString(urlString);
+        Intent openWebIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
 
-        //Should fire twice: Once for the market and once for the web.
-        verify(mMockContext, times(1)).startActivity(openWebIntent);
+        Intent fromHelper = ParchePartnerURLSchemeHelper.showParcheInPlayStoreIntent(mMockContext);
+        assertTrue(fromHelper.filterEquals(openWebIntent));
     }
 
     @Test
     public void openingWithoutDiscountShouldWork() {
         setMockCanOpenParche(true);
-        boolean canOpen = ParchePartnerURLSchemeHelper.openParche(mMockContext, TEST_API_KEY);
-        assertTrue(canOpen);
-        verifyMockFiredIntentWithURLString(EXPECTED_NO_DISCOUNT_URL_STRING);
+        Intent openWithoutDiscount = new Intent(Intent.ACTION_VIEW, Uri.parse(EXPECTED_NO_DISCOUNT_URL_STRING));
+        Intent fromHelper = ParchePartnerURLSchemeHelper.openParcheIntent(mMockContext, TEST_API_KEY);
+        assertNotNull(fromHelper);
+        assertTrue(fromHelper.filterEquals(openWithoutDiscount));
     }
 
     @Test
     public void openingWithoutDiscountShouldFailIfAppNeedsInstallOrUpgrade() {
         setMockCanOpenParche(false);
-        boolean canOpen = ParchePartnerURLSchemeHelper.openParche(mMockContext, TEST_API_KEY);
-        assertFalse(canOpen);
-        verifyMockNeverFiredIntentWithURLString(EXPECTED_NO_DISCOUNT_URL_STRING);
+        Intent fromHelper = ParchePartnerURLSchemeHelper.openParcheIntent(mMockContext, TEST_API_KEY);
+        assertNull(fromHelper);
     }
 
     @Test
     public void openingWithDiscountShouldWork() {
         setMockCanOpenParche(true);
-        boolean canOpen = ParchePartnerURLSchemeHelper.openParcheAndRequestDiscount(mMockContext,
+        Intent openWithDiscount = new Intent(Intent.ACTION_VIEW, Uri.parse(EXPECTED_STANDARD_DISCOUNT_URL_STRING));
+        Intent fromHelper = ParchePartnerURLSchemeHelper.openParcheAndRequestDiscount(mMockContext,
                 TEST_DISCOUNT_CODE,
                 TEST_STANDARD_USER_ID,
                 TEST_API_KEY);
-        assertTrue(canOpen);
-        verifyMockFiredIntentWithURLString(EXPECTED_STANDARD_DISCOUNT_URL_STRING);
+        assertNotNull(fromHelper);
+        assertTrue(fromHelper.filterEquals(openWithDiscount));
     }
 
     @Test
     public void openingWithDiscountShouldFailIfAppNeedsInstallOrUpgrade() {
         setMockCanOpenParche(false);
-        boolean canOpen = ParchePartnerURLSchemeHelper.openParcheAndRequestDiscount(mMockContext,
+        Intent fromHelper = ParchePartnerURLSchemeHelper.openParcheAndRequestDiscount(mMockContext,
                 TEST_DISCOUNT_CODE,
                 TEST_STANDARD_USER_ID,
                 TEST_API_KEY);
-        assertFalse(canOpen);
-        verifyMockNeverFiredIntentWithURLString(EXPECTED_STANDARD_DISCOUNT_URL_STRING);
+        assertNull(fromHelper);
     }
 }

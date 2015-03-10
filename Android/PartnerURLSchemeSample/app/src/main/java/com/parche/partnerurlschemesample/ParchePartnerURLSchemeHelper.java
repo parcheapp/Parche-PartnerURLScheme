@@ -20,51 +20,15 @@ public class ParchePartnerURLSchemeHelper {
     public static final String PLAY_STORE_URL_SCHEME = "market://details?id=";
     public static final String PLAY_STORE_WEB_URL = "http://play.google.com/store/apps/details?id=";
 
-
-    private Intent mIntent;
-
     /*******************
      * PRIVATE METHODS *
      *******************/
 
-     private static ParchePartnerURLSchemeHelper sSharedInstance = null;
-     private static ParchePartnerURLSchemeHelper sharedInstance() {
-         if (sSharedInstance == null) {
-             sSharedInstance = new ParchePartnerURLSchemeHelper();
-         }
-
-         return sSharedInstance;
-     }
-
     private static boolean urlCanBeHandled(Context aContext, String aURLString) {
         PackageManager packageManager = aContext.getPackageManager();
-        Intent openAppIntent = getViewIntentForURLString(aURLString);
+        Intent openAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(aURLString));
         List activitiesCanHandle = packageManager.queryIntentActivities(openAppIntent, PackageManager.MATCH_DEFAULT_ONLY);
         return activitiesCanHandle.size() != 0;
-    }
-
-    /*******************
-     * TESTING METHODS *
-     *******************/
-
-    /*
-       The following methods are protected so they may be accessed by tests.
-     */
-
-    protected static void setIntent(Intent aIntent) {
-        sharedInstance().mIntent = aIntent;
-    }
-
-    protected static Intent getViewIntentForURLString(String aURLString) {
-        Intent intentToUse = sharedInstance().mIntent;
-        if (intentToUse == null) {
-            intentToUse = new Intent();
-        }
-
-        intentToUse.setAction(Intent.ACTION_VIEW);
-        intentToUse.setData(Uri.parse(aURLString));
-
-        return intentToUse;
     }
 
     /******************
@@ -85,52 +49,53 @@ public class ParchePartnerURLSchemeHelper {
     }
 
     /**
-     * Opens the Google Play store to show the Parche application so it may be updated or installed.
-     * Will try to open the Google Play store first, then fall back to opening the app's page on the Play store website.
+     * Creates an intent to open either the Play Store or the web page for the play store which will show Parche,
+     * depending on whether the user has the Play Store installed or not.
      *
      * @param aContext The current context.
+     * @return An Intent which can be used to launch the appropriate route to the Play Store.
      */
     //Intent.FLAG_ACTIVITY_CLEAR_TASK_WHEN_RESET deprecated in API 21, but still needed before that.
     @SuppressWarnings("deprecation")
-    public static void showParcheInPlayStore(Context aContext) {
+    public static Intent showParcheInPlayStoreIntent(Context aContext) {
         String marketURLString = PLAY_STORE_URL_SCHEME + PARCHE_PACKAGE_NAME;
 
+        Intent returnIntent;
         if (urlCanBeHandled(aContext, marketURLString)) {
-            Intent marketIntent = getViewIntentForURLString(marketURLString);
-            marketIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+            returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(marketURLString));
+            returnIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                     Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET |
                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-            aContext.startActivity(marketIntent);
         } else {
             //This user does not have the Play app installed - show them the webpage.
             String webURLString = PLAY_STORE_WEB_URL + PARCHE_PACKAGE_NAME;
-            Intent webIntent = getViewIntentForURLString(webURLString);
-            aContext.startActivity(webIntent);
+            returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(webURLString));
         }
+
+        return returnIntent;
     }
 
     /**
-     * Opens the Parche application without a discount, but indicating what app the request
+     * Creates an Intent to open the Parche application without a discount, but indicating what app the request
      * is coming from.
      *
      * @param aContext  The current context.
      * @param aAPIKey   The partner application's Parche API key.
      *
-     * @return true if the request opened the Parche application successfully, false if it did not.
+     * @return The intent to open the Parche application, or null if the app needs to be updated or installed.
      */
-    public static boolean openParche(Context aContext, String aAPIKey) {
+    public static Intent openParcheIntent(Context aContext, String aAPIKey) {
+        Intent returnIntent = null;
         if (!parcheNeedsToBeUpdatedOrInstalled(aContext)) {
             String urlString = URL_SCHEME + OPEN_ENDPOINT + String.format(NO_DISCOUNT_FORMAT, aAPIKey);
-            Intent openOnlyIntent = getViewIntentForURLString(urlString);
-            aContext.startActivity(openOnlyIntent);
-            return true;
+            returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
         }
 
-        return false;
+        return returnIntent;
     }
 
     /**
-     * Opens the Parche application and passes the required information to provide a user discount
+     * Creates an Intent to open Parche application and pass the required information to provide a user discount
      * along to the app.
      *
      * @param aContext          The current context.
@@ -139,19 +104,18 @@ public class ParchePartnerURLSchemeHelper {
      *                          class, DO NOT URL ENCODE before passing in.
      * @param aAPIKey           The partner applications Parche API key.
      *
-     * @return true if the request opened the Parche application successfully, false if it did not.
+     * @return The intent to open the Parche application, or null if the app needs to be updated or installed.
      */
-    public static boolean openParcheAndRequestDiscount(Context aContext,
-                                                       String aDiscountCode,
-                                                       String aPartnerUserID,
-                                                       String aAPIKey) {
+    public static Intent openParcheAndRequestDiscount(Context aContext,
+                                                      String aDiscountCode,
+                                                      String aPartnerUserID,
+                                                      String aAPIKey) {
+        Intent returnIntent = null;
         if (!parcheNeedsToBeUpdatedOrInstalled(aContext)) {
             String urlString = URL_SCHEME + OPEN_ENDPOINT + String.format(DISCOUNT_FORMAT, aPartnerUserID, aDiscountCode, aAPIKey);
-            Intent discountIntent = getViewIntentForURLString(urlString);
-            aContext.startActivity(discountIntent);
-            return true;
+            returnIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlString));
         }
 
-        return false;
+        return returnIntent;
     }
 }

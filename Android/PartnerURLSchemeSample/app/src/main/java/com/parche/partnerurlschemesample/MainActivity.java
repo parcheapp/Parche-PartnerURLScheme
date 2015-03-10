@@ -2,6 +2,7 @@ package com.parche.partnerurlschemesample;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBarActivity;
@@ -54,13 +55,17 @@ public class MainActivity extends ActionBarActivity {
 
     @OnClick(R.id.show_in_store_button)
     public void showParcheInPlayStore() {
-        ParchePartnerURLSchemeHelper.showParcheInPlayStore(this);
+        Intent openPlayStoreIntent = ParchePartnerURLSchemeHelper.showParcheInPlayStoreIntent(this);
+        startActivity(openPlayStoreIntent);
     }
 
     @OnClick(R.id.open_no_discount_button)
     public void openWithoutDiscount() {
-        if (!ParchePartnerURLSchemeHelper.openParche(this, "FAKE_API_KEY")) {
+        Intent openIntent = ParchePartnerURLSchemeHelper.openParcheIntent(this, "FAKE_API_KEY");
+        if (openIntent == null) {
             showAlert(R.string.not_installed_alert_title, R.string.not_installed_alert_message);
+        } else {
+            startActivity(openIntent);
         }
     }
 }
