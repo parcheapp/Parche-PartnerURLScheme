@@ -4,7 +4,7 @@ import android.content.*;
 import android.content.pm.*;
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
-import com.parche.partnerurlschemesample.helperlib.ParchePartnerURLSchemeHelper;
+import com.parche.helperlib.ParchePartnerURLSchemeHelper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
