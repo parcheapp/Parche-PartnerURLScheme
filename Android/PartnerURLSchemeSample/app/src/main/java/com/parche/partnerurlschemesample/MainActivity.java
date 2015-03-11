@@ -8,6 +8,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 import butterknife.*;
+import com.parche.partnerurlschemesample.helperlib.ParchePartnerURLSchemeHelper;
 
 
 public class MainActivity extends ActionBarActivity {
