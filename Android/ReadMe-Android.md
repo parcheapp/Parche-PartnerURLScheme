@@ -9,6 +9,8 @@ There are four public class methods on the helper class.
 These are more extensively documented inline (and the inline documentation should be considered canonical), but in brief: 
 
 - `parcheNeedsToBeUpdatedOrInstalled(Context aContext)` tells your application whether the user needs to install or update Parche.
-- `showParcheInPlayStore(Context aContext)` kicks the user to the App Store to install or update Parche. 
-- `openParche(Context aContext, String aAPIKey)` opens Parche without applying a discount, but identifies the app opening Parche.
-- `openParcheAndRequestDiscount(Context aContext, String aDiscountCode, String aPartnerUserID, String aAPIKey)` opens the application and passes in the information provided in the parameters, giving the user the ability to use the provided discount code after they login or register with Parche. 
+- `showParcheInPlayStoreIntent(Context aContext)` returns an [Intent](http://developer.android.com/reference/android/content/Intent.html) which kicks the user to the App Store to install or update Parche. 
+- `openParcheIntent(Context aContext, String aAPIKey)` returns an [Intent](http://developer.android.com/reference/android/content/Intent.html) which opens Parche without applying a discount, but identifies the app opening Parche.
+- `openParcheAndRequestDiscount(Context aContext, String aDiscountCode, String aPartnerUserID, String aAPIKey)` returns an [Intent](http://developer.android.com/reference/android/content/Intent.html) which opens Parche and passes in the information provided in the parameters, giving the user the ability to use the provided discount code after they login or register with Parche. 
+
+Note that the calling application is responsible for actually starting activities based on the returned `Intents`. 
