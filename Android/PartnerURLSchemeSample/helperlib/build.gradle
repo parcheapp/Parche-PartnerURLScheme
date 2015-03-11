@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'android-maven'
 
 android {
     compileSdkVersion 21
@@ -21,14 +20,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-// build a jar with source files
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-artifacts {
-    archives sourcesJar
+    compile 'com.android.support:appcompat-v7:21.0.3'
 }
