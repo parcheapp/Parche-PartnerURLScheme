@@ -1,6 +1,7 @@
-package com.parche.partnerurlschemesample;
+package com.parche.helperlib;
 
-import android.content.*;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.*;
 import android.net.Uri;
 import android.support.test.runner.AndroidJUnit4;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.refEq;
 import static org.mockito.Mockito.*;
 
 /**

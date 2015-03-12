@@ -1,4 +1,4 @@
-package com.parche.partnerurlschemesample;
+package com.parche.helperlib;
 
 import android.content.*;
 import android.content.pm.PackageManager;
