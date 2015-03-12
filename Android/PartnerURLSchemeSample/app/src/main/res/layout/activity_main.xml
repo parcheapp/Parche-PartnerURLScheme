@@ -39,4 +39,11 @@
             android:text="@string/open_no_discount"
             android:id="@+id/open_no_discount_button"
             />
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open_fake_discount"
+            android:id="@+id/open_fake_discount_button"
+            />
 </LinearLayout>
