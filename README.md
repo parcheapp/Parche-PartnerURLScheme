@@ -36,14 +36,13 @@ If you are using a beta version of the application to test, Parche will let you 
 
 ###Get Discount For Partner Application User
 
-**POST:** `/v1/URLTK`
+**POST:** /v1/partner/:api_key/create_discount``
 
 **Body:**
 
 ```
 {
     "partner_user_id": "janedoe312@example.com",
-    "api_key": "[your API key]",
     "api_secret": "[your API secret]"
 }
 ```
@@ -71,7 +70,7 @@ If you are using a beta version of the application to test, Parche will let you 
 
 - `201` if discount code was created
 - `400` if the fields in your request were incorrect
-- `401` if the wrong API key or API secret is provided
+- `403` if the wrong API key or API secret is provided
 
 #Integration With Applications
 
