@@ -68,4 +68,14 @@ public class MainActivity extends ActionBarActivity {
             startActivity(openIntent);
         }
     }
+
+    @OnClick(R.id.open_fake_discount_button)
+    public void openWithFakeDiscount() {
+        Intent openIntent = ParchePartnerURLSchemeHelper.openParcheAndRequestDiscount(this, "FAKE_DISCOUNT_CODE", "Partner User ID", "FAKE_API_KEY");
+        if (openIntent == null) {
+            showAlert(R.string.not_installed_alert_title, R.string.not_installed_alert_message);
+        } else {
+            startActivity(openIntent);
+        }
+    }
 }

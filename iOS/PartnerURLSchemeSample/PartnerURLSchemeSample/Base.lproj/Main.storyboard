@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -25,34 +26,8 @@
                                     <action selector="checkParcheNeedsUpdateOrInstall" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qf2-P5-0CQ"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uc-id-dgY">
-                                <rect key="frame" x="20" y="84" width="560" height="98.5"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Does Parche need to be updated or installed?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xuS-Ps-juE">
-                                        <rect key="frame" x="20" y="20" width="520" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N60-2M-2hu">
-                                        <rect key="frame" x="262" y="48" width="37" height="30"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="leading" secondItem="8uc-id-dgY" secondAttribute="leading" constant="20" id="BOz-E6-ViI"/>
-                                    <constraint firstAttribute="trailing" secondItem="xuS-Ps-juE" secondAttribute="trailing" constant="20" id="NSU-eo-iMa"/>
-                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="top" secondItem="8uc-id-dgY" secondAttribute="top" constant="20" id="sb0-FI-EYS"/>
-                                    <constraint firstAttribute="bottom" secondItem="N60-2M-2hu" secondAttribute="bottom" constant="20" id="uKK-3f-HbK"/>
-                                    <constraint firstItem="N60-2M-2hu" firstAttribute="top" secondItem="xuS-Ps-juE" secondAttribute="bottom" constant="8" id="xcV-aZ-vdw"/>
-                                    <constraint firstAttribute="centerX" secondItem="N60-2M-2hu" secondAttribute="centerX" id="y3u-te-Tq0"/>
-                                </constraints>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sl2-rz-Ntj">
-                                <rect key="frame" x="210" y="208" width="181" height="30"/>
+                                <rect key="frame" x="210" y="198" width="181" height="30"/>
                                 <state key="normal" title="Show Parche In App Store">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -61,7 +36,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vCw-Sm-PPb">
-                                <rect key="frame" x="194" y="254.5" width="212" height="30"/>
+                                <rect key="frame" x="186" y="245" width="228" height="30"/>
                                 <state key="normal" title="Open Parche Without Discount">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -69,19 +44,59 @@
                                     <action selector="openAppWithoutDiscount" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Mhl-xx-Kfc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWH-c9-Arn">
+                                <rect key="frame" x="186" y="291" width="228" height="30"/>
+                                <state key="normal" title="Open Parche With Fake Discount">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="openAppWithFakeDiscount" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lto-xf-Gsf"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8uc-id-dgY">
+                                <rect key="frame" x="20" y="84" width="560" height="98"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Does Parche need to be updated or installed?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xuS-Ps-juE">
+                                        <rect key="frame" x="20" y="20" width="520" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="1xd-S8-IPc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N60-2M-2hu">
+                                        <rect key="frame" x="262" y="48" width="37" height="30"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="N60-2M-2hu" firstAttribute="top" secondItem="xuS-Ps-juE" secondAttribute="bottom" constant="7" id="3uO-LD-UpI"/>
+                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="top" secondItem="8uc-id-dgY" secondAttribute="top" constant="20" id="Gej-gm-xdS"/>
+                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="leading" secondItem="8uc-id-dgY" secondAttribute="leading" constant="20" id="WSn-nb-aBx"/>
+                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="centerX" secondItem="8uc-id-dgY" secondAttribute="centerX" id="ivT-Ip-tsi"/>
+                                    <constraint firstItem="xuS-Ps-juE" firstAttribute="centerX" secondItem="N60-2M-2hu" secondAttribute="centerX" id="sWU-ZI-gc8"/>
+                                    <constraint firstAttribute="bottom" secondItem="N60-2M-2hu" secondAttribute="bottom" constant="20" id="vvY-lx-UdC"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sl2-rz-Ntj" firstAttribute="top" secondItem="8uc-id-dgY" secondAttribute="bottom" constant="26" id="1nH-72-tM6"/>
-                            <constraint firstAttribute="centerX" secondItem="vCw-Sm-PPb" secondAttribute="centerX" id="Bfu-76-XgI"/>
-                            <constraint firstItem="8uc-id-dgY" firstAttribute="top" secondItem="6qO-ak-zP6" secondAttribute="bottom" constant="8" id="JEj-4z-irw"/>
-                            <constraint firstItem="vCw-Sm-PPb" firstAttribute="top" secondItem="sl2-rz-Ntj" secondAttribute="bottom" constant="16" id="Lnn-cQ-MFK"/>
-                            <constraint firstAttribute="centerX" secondItem="6qO-ak-zP6" secondAttribute="centerX" id="Owy-gB-MNu"/>
-                            <constraint firstAttribute="trailing" secondItem="8uc-id-dgY" secondAttribute="trailing" constant="20" id="S8a-Ib-403"/>
-                            <constraint firstAttribute="centerX" secondItem="sl2-rz-Ntj" secondAttribute="centerX" id="Tqh-xP-gFR"/>
-                            <constraint firstItem="8uc-id-dgY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" id="Uh2-dk-XIg"/>
-                            <constraint firstAttribute="centerX" secondItem="8uc-id-dgY" secondAttribute="centerX" id="ljg-LG-vEz"/>
-                            <constraint firstItem="6qO-ak-zP6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="26" id="qhv-r4-hX1"/>
+                            <constraint firstItem="8uc-id-dgY" firstAttribute="top" secondItem="6qO-ak-zP6" secondAttribute="bottom" constant="8" symbolic="YES" id="5wl-Ck-tAh"/>
+                            <constraint firstItem="sl2-rz-Ntj" firstAttribute="centerX" secondItem="vCw-Sm-PPb" secondAttribute="centerX" id="Bvl-sC-Biw"/>
+                            <constraint firstItem="vCw-Sm-PPb" firstAttribute="trailing" secondItem="UWH-c9-Arn" secondAttribute="trailing" id="Lbo-aE-hfx"/>
+                            <constraint firstItem="vCw-Sm-PPb" firstAttribute="leading" secondItem="UWH-c9-Arn" secondAttribute="leading" id="Msi-h1-qYQ"/>
+                            <constraint firstItem="sl2-rz-Ntj" firstAttribute="top" secondItem="8uc-id-dgY" secondAttribute="bottom" constant="16" id="Oc8-SA-1SG"/>
+                            <constraint firstItem="6qO-ak-zP6" firstAttribute="centerX" secondItem="8uc-id-dgY" secondAttribute="centerX" id="QtO-kB-xDO"/>
+                            <constraint firstItem="6qO-ak-zP6" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="26" id="T24-24-PNP"/>
+                            <constraint firstItem="UWH-c9-Arn" firstAttribute="top" secondItem="vCw-Sm-PPb" secondAttribute="bottom" constant="16" id="ZnV-7E-08a"/>
+                            <constraint firstItem="UWH-c9-Arn" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="eMU-FS-d0b"/>
+                            <constraint firstItem="sl2-rz-Ntj" firstAttribute="centerX" secondItem="8uc-id-dgY" secondAttribute="centerX" id="kQw-qH-uch"/>
+                            <constraint firstItem="vCw-Sm-PPb" firstAttribute="top" secondItem="sl2-rz-Ntj" secondAttribute="bottom" constant="17" id="kaY-y3-zkQ"/>
+                            <constraint firstItem="8uc-id-dgY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="4" id="p2C-M4-58z"/>
                         </constraints>
                     </view>
                     <connections>
