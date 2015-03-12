@@ -4,7 +4,17 @@ The file which you will be using in your application is the [ParchePartnerURLSch
 
 ##Installation
 
-This class can be added to your project using Gradle. Add the following line to the `dependencies` closure in your `build.gradle` file at the app level: 
+This class can be added to your project using Gradle. 
+
+First, add the following to your `repositories` closure in your `build.gradle`file at the app level: 
+
+```groovy
+maven {
+	url  "http://dl.bintray.com/vokal-open-source/maven"
+}
+```
+
+Then, add the following line to the `dependencies` closure in your `build.gradle` file at the app level: 
 
 ```groovy
 compile 'com.parche:helper-lib:1.0.0@aar'
