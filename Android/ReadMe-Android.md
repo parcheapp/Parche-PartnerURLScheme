@@ -4,24 +4,10 @@ The file which you will be using in your application is the [ParchePartnerURLSch
 
 ##Installation
 
-This class can be added to your project with the power of [JitPack](https://jitpack.io/) and Gradle. 
-
-Add the JitPack repo to your list of repositories in your `build.gradle` file at the app level: 
+This class can be added to your project using Gradle. Add the following line to the `dependencies` closure in your `build.gradle` file at the app level: 
 
 ```groovy
-repositories {
-	maven {
-		url "https://jitpack.io"
-	}
-}
-```
-
-Then add the library to your list of dependencies: 
-
-```groovy
-dependencies {
-	compile 'com.github.vokal:Parche-PartnerURLScheme.Android.PartnerURLSchemeSample.app.src.main.java.com.parche.partnerurlschemesample.helperlib:android-1.0.0'
-}
+compile 'TODO'
 ```
 
 #ParchePartnerURLSchemeHelper

@@ -1,8 +1,16 @@
 #Parche URL Scheme Helper: iOS
 
-The files which you should include in your application are available in the [PartnerURLSchemeHelper](PartnerURLSchemeSample/PartnerURLSchemeHelper) folder within the sample project. 
+The files which you will be using in your application are the [PartnerURLSchemeHelper](PartnerURLSchemeSample/PartnerURLSchemeHelper) files. 
 
-Copy the folder and all of its contents into your Xcode project, adding the files to your application target (or targets). 
+#Installation
+
+We strongly recommend using [CocoaPods](http://cocoapods.org/) to add these files as a dependency. To add the files, add the following line to your `Podfile`:
+
+```ruby
+pod 'ParchePartnerURLScheme', '~> 1.0'
+```
+
+And then running `pod install`. We also recommend using Orta Therox's [cocoapods-keys](https://github.com/orta/cocoapods-keys/) plugin to secure your API key. 
 
 #PARPartnerURLSchemeHelper
 
