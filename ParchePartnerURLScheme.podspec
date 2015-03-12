@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.description  = <<-DESC
                     A utility to make it easier for partner applications of Parche to open the app using a URL scheme.
                     
-                    More information 
+                    To request more information about becoming a partner of Parche, please visit the Parche website, http://www.goparche.com.
                    DESC
   s.homepage     = "http://www.goparche.com"
   s.license      = { :type => 'Copyright', :file => 'LICENSE.md' }
