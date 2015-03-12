@@ -50,6 +50,13 @@
     }
 }
 
+- (IBAction)openAppWithFakeDiscount
+{
+    if (![PARPartnerURLSchemeHelper openParcheAndRequestDiscountForUser:@"Partner User ID" discountCode:@"DISCOUNT_CODE" apiKey:@"FAKE_API_KEY"]) {
+        [self showSimpleAlertVCWithTitle:@"Ruh Roh!" message:@"You do not have a version of Parche which supports the URL scheme installed."];
+    }
+}
+
 - (void)showSimpleAlertVCWithTitle:(NSString *)title message:(NSString *)message
 {
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title
